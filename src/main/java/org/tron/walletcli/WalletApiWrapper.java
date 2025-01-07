@@ -5,6 +5,9 @@ import io.netty.util.internal.StringUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.util.encoders.Hex;
 import org.tron.api.GrpcAPI;
@@ -52,6 +55,8 @@ import java.util.Optional;
 @Slf4j
 public class WalletApiWrapper {
 
+  @Getter
+  @Setter
   private WalletApi wallet;
 
   public String registerWallet(char[] password) throws CipherException, IOException {

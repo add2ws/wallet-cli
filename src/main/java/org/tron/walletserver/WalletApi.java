@@ -159,7 +159,7 @@ import org.tron.protos.contract.WitnessContract.WitnessUpdateContract;
 @Slf4j
 public class WalletApi {
 
-  private static final String FilePath = "Wallet";
+  public static String FilePath = "Wallet";
   private List<WalletFile> walletFile = new ArrayList<>();
   private boolean loginState = false;
   private byte[] address;
