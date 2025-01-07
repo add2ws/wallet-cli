@@ -29,7 +29,7 @@ public class ApplicationExecutor {
 
     static void importWallet() throws CipherException, IOException {
         login();
-        String pri = "xxxxxxxxxxxxxxxxxx";
+        String pri = "xxxxxxxxxxx";
 //        String pri = "xxxxxxxxxxxxxxxxxxxxxxxx";
         byte[] priKey = StringUtils.hexs2Bytes(pri.getBytes());
         String s = WalletApiWrapperSingleton.importWallet(Password, priKey);
@@ -42,7 +42,7 @@ public class ApplicationExecutor {
         logger.info("结果是=>\n{}", address);
     }
 
-    static void getAccount() throws CipherException, IOException {
+    static Protocol.Account getAccount() throws CipherException, IOException {
 
         login();
         Protocol.Account account = WalletApiWrapperSingleton.queryAccount();
@@ -50,6 +50,7 @@ public class ApplicationExecutor {
         Protocol.Transaction transaction = Protocol.Transaction.getDefaultInstance();
 
         logger.info("结果是===>\n{}", Utils.formatMessageString(account));
+        return account;
     }
 
     static Protocol.Account queryAccount(String addressBase58) throws CipherException, IOException {
@@ -70,21 +71,39 @@ public class ApplicationExecutor {
         login();
 
         boolean b = WalletApiWrapperSingleton.accountPermissionUpdate(owner, permissionJSON);
-        logger.info("结果是===>\n{}", b);
+        logger.info("结果是===>{}", b);
+
+    }
+
+    static void sendCoin(String ownerBase54, String toBase54, long amount) throws CipherException, IOException, CancelException {
+        login();
+        boolean b = WalletApiWrapperSingleton.sendCoin(WalletApi.decodeFromBase58Check(ownerBase54), WalletApi.decodeFromBase58Check(toBase54), amount);
+        logger.info("结果是===>{}", b);
 
     }
 
     static String owner_key = "TMvMriTLkS2fjBKtyixzJUbnjro8TaZzRo";
     static String active_key = "TCrvqd9r2zvZFuNGWEQiivuCcNXZqUBmFr";
+    static String tron3_key = "THQRNVstadZ7zpHMfafuoXe7Et4utHyrEn";
 
     public static void main(String[] args) throws CipherException, IOException, CancelException {
 //        queryAccount("TCrvqd9r2zvZFuNGWEQiivuCcNXZqUBmFr");
+
 //        getBlock();
-        WalletApi.FilePath = "Wallet2";
-        //        register();
+
+        WalletApi.FilePath = "Wallet";
+
+        sendCoin("TCrvqd9r2zvZFuNGWEQiivuCcNXZqUBmFr", "THQRNVstadZ7zpHMfafuoXe7Et4utHyrEn", 1);
+
+//                register();
+
 //        importWallet();
-//        getAccount();
-        updatePermission("TCrvqd9r2zvZFuNGWEQiivuCcNXZqUBmFr", "{\"owner_permission\":{\"keys\":[{\"address\":\"TMvMriTLkS2fjBKtyixzJUbnjro8TaZzRo\",\"weight\":1}],\"threshold\":1,\"type\":0,\"permission_name\":\"owner\"},\"active_permissions\":[{\"operations\":\"7fff1fc0033ec30f000000000000000000000000000000000000000000000000\",\"keys\":[{\"address\":\"TMvMriTLkS2fjBKtyixzJUbnjro8TaZzRo\",\"weight\":1}],\"threshold\":1,\"type\":2,\"permission_name\":\"active\"}]}");
+
+//        Protocol.Account account = getAccount();
+//        logger.info("账户[{}]余额：{}", account.getAccountName(), account.getBalance() / 1000000.0);
+
+//        updatePermission("TCrvqd9r2zvZFuNGWEQiivuCcNXZqUBmFr", "{\"owner_permission\":{\"keys\":[{\"address\":\"TMvMriTLkS2fjBKtyixzJUbnjro8TaZzRo\",\"weight\":1}],\"threshold\":1,\"type\":0,\"permission_name\":\"owner\"},\"active_permissions\":[{\"operations\":\"7fff1fc0033ec30f000000000000000000000000000000000000000000000000\",\"keys\":[{\"address\":\"TMvMriTLkS2fjBKtyixzJUbnjro8TaZzRo\",\"weight\":1}],\"threshold\":1,\"type\":2,\"permission_name\":\"active\"}]}");
+
 
     }
 }
